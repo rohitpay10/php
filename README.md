@@ -1,3 +1,3 @@
 # php
 
-This is a oops based php code for pay10 integration
+This is an oops based php code for pay10 integration.
