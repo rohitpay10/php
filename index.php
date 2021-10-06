@@ -13,7 +13,8 @@
 
 <body class="bg-light">
 	<div class="container">
-		<form action="inc/pay10_helper.php" method="POST">
+		<form action="process.php" method="POST">
+			<input type="hidden" name="process_request" value="yes">
 		<div class="row justify-content-center">
 			<div class="col-md-10">
 				<h4 class="mb-3"><img src="images/logo.png" alt=""> Quick Checkout Page</h4>
