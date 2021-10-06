@@ -152,15 +152,6 @@ class Pay10PGModule
      */
     private $pg_request_url;
 
-    function __construct($pay_id='1144510924100302',$salt='10b73b1837ca411e',$return_url='http://localhost/projects/Pay10_newkit/response.php')
-    {
-    
-     $this->pay_id=$pay_id;
-     $this->salt=$salt;
-     $this->return_url=$return_url;
-
-    }
-
     /**
      * @param string $pay_id
      *
@@ -544,8 +535,6 @@ class Pay10PGModule
     public function validateResponse($response)
     {
         $postdata = $response;
-        //print_r($global_vars);
-        //please assign your salt here
         $salt=$this->salt;
         ksort($postdata);
         unset($postdata["HASH"]);
