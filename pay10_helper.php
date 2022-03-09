@@ -151,6 +151,8 @@ class Pay10PGModule
      * @var [type]
      */
     private $pg_request_url;
+    private $pg_merchant_hosted_key;
+    
 
     /**
      * @param string $pay_id
@@ -439,6 +441,15 @@ class Pay10PGModule
         return $this;
     }
 
+    public function setMerchantHostedKey($pg_merchant_hosted_key)
+    {
+        $this->pg_merchant_hosted_key = $pg_merchant_hosted_key;
+
+        return $this;
+    }
+
+    
+
     /**
      * [_empty to remove null values]
      * @param  string $value input string
@@ -539,7 +550,7 @@ class Pay10PGModule
         ksort($postdata);
         unset($postdata["HASH"]);
         unset($postdata["CARD_ISSUER_BANK"]);
-      
+        
         $all = '';
         foreach ($postdata as $name => $value) {
             $all .= $name."=".$value."~";
@@ -572,6 +583,37 @@ class Pay10PGModule
         $output .= '</form><script> document.getElementById("payForm").submit(); </script><h2>Redirecting...</h2>';
         echo $output;
         exit();
+    }
+
+
+    //for aes encrytion
+
+    public function aes_encyption($hash_string){
+     $CryptoKey= $this->pg_merchant_hosted_key; //Prod Key
+     $iv = substr($CryptoKey, 0, 16); //or provide iv
+     $method = "AES-256-CBC";
+     $ciphertext = openssl_encrypt($hash_string, $method, $CryptoKey, OPENSSL_RAW_DATA, $iv);
+     $ENCDATA= base64_encode($ciphertext);
+     return $ENCDATA;
+    }       
+
+    public function aes_decryption($ENCDATA){
+    $CryptoKey= $this->pg_merchant_hosted_key; //Prod Key
+    $iv = substr($CryptoKey, 0, 16); //or provide iv
+    $method = "AES-256-CBC";
+    $encrptedString  = openssl_decrypt($ENCDATA, $method, $CryptoKey, 0, $iv);
+    return $encrptedString;
+    }  
+
+    public function split_decrypt_string($value)
+    {
+        $plain_string=explode('~',$value);
+        $final_data = array();
+        foreach ($plain_string as $key => $value) {
+            $simple_string=explode('=',$value);
+           $final_data[$simple_string[0]]=$simple_string[1];
+        } 
+        return $final_data;
     }
 
 }

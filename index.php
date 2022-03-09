@@ -13,7 +13,7 @@
 
 <body class="bg-light">
 	<div class="container">
-		<form action="process.php" method="POST">
+		<form action="process.php" method="POST" id="proceedto">
 			<input type="hidden" name="process_request" value="yes">
 		<div class="row justify-content-center">
 			<div class="col-md-10">
@@ -27,7 +27,7 @@
 						</div>
 						<div class="col-md-6 mb-3">
 							<label for="orderId">Order ID</label>
-							<input type="text" class="form-control" id="orderId" name="ORDER_ID" placeholder="" value="<?php echo 'PAY10_'.date('dmyHi')?>" required>
+							<input type="text" class="form-control" id="orderId" name="ORDER_ID" placeholder="" value="<?php echo 'PAY10_'.date('dmyHi').rand(10,1000);?>" required>
 							<div class="invalid-feedback">Valid last name is required.</div>
 						</div>
 					</div>
@@ -77,7 +77,7 @@
 			</div>
 			  <div class="row">
 			  	 <div class="col-md-3 offset-md-1">
-			   	<button class="btn btn-custom-color btn-small btn-block" type="submit">Continue to checkout</button>
+			   	<button class="btn btn-custom-color btn-small btn-block" type="submit" id="proceedtopay">Continue to checkout</button>
 			   </div>
 			  </div>
 		  </form>	  
